@@ -107,6 +107,12 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
+            ),
+            Container(
+              width: width*1,
+              decoration: BoxDecoration(
+                color: Colors.white
+              ),
             )
           ],
         ),
