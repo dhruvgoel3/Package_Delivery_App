@@ -34,7 +34,7 @@ class _OnboardingScreanState extends State<OnboardingScrean> {
             ),
             Text(
               "Check the progress of the parcel",
-              style: AppWidget.SimpleTextFieldStyle(),
+              style: AppWidget.SimpleTextFieldStyle(18),
             ),
             SizedBox(
               height: 50,
