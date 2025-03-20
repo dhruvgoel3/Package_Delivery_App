@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppWidget {
-  static TextStyle HeadLineTextFieldStyle() {
+  static TextStyle HeadLineTextFieldStyle(double textsize) {
     return TextStyle(
-        color: Colors.black, fontSize: 28, fontWeight: FontWeight.bold);
+        color: Colors.black, fontSize: textsize, fontWeight: FontWeight.bold);
   }
 
   static TextStyle SimpleTextFieldStyle() {
@@ -14,5 +14,10 @@ class AppWidget {
   static TextStyle WhiteTextFieldStyle() {
     return TextStyle(
         color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold);
+  }
+
+  static TextStyle differentWhiteTextFieldStyle() {
+    return TextStyle(
+        color: Colors.white54, fontSize: 17, fontWeight: FontWeight.bold);
   }
 }
