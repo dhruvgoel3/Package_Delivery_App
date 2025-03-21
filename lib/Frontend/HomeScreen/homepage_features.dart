@@ -12,7 +12,6 @@ class HomepageFeatures extends StatefulWidget {
 class _HomepageFeaturesState extends State<HomepageFeatures> {
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Column(
       children: [
