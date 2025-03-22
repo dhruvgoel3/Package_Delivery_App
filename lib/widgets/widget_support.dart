@@ -6,6 +6,11 @@ class AppWidget {
         color: Colors.black, fontSize: textsize, fontWeight: FontWeight.bold);
   }
 
+  static TextStyle normalWhiteTextFieldStyle() {
+    return TextStyle(
+        color: Colors.grey, fontSize: 17, fontWeight: FontWeight.w500);
+  }
+
   static TextStyle SimpleTextFieldStyle(double Simpletextsize) {
     return TextStyle(
         color: Colors.black38,
