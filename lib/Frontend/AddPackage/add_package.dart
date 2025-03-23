@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,6 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:package_delivery_app/widgets/custom_button.dart';
 import 'package:package_delivery_app/widgets/custom_textfields.dart';
 import 'package:package_delivery_app/widgets/widget_support.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class AddPackage extends StatefulWidget {
   const AddPackage({super.key});
@@ -14,6 +17,56 @@ class AddPackage extends StatefulWidget {
 }
 
 class _AddPackageState extends State<AddPackage> {
+  late Razorpay _razorpay;
+
+  @override
+  void initState() {
+    super.initState();
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  @override
+  void dispose() {
+    _razorpay.clear();
+    super.dispose();
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    Get.snackbar("Payment Successful", "Payment ID: \${response.paymentId}",
+        snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green);
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    Get.snackbar("Payment Failed", "Error: \${response.message}",
+        snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    Get.snackbar("External Wallet Selected", response.walletName!,
+        snackPosition: SnackPosition.BOTTOM);
+  }
+
+  void _openRazorpay() {
+    var options = {
+      "key": "rzp_test_6nW2jeDEUbkrLQ", // Replace with your Razorpay API key
+      "amount": 8000, // 80 * 100 (Amount in paise)
+      "name": "Package Delivery App",
+      "description": "Order Payment",
+      "prefill": {"contact": "9876543210", "email": "dhruvgoel1100@gmail.com"},
+      "external": {
+        "wallets": ["paytm"]
+      }
+    };
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint('Error: $e');
+    }
+    _razorpay.open(options);
+  }
   // Controllers
 
   TextEditingController PickUpAddress = new TextEditingController();
@@ -237,10 +290,9 @@ class _AddPackageState extends State<AddPackage> {
                               ),
                             ),
                             Buttons().CustomButtons(
-                                ButtonTitle: "Place order",
-                                OnTap: () {
-                                  Get.to(() => Placeholder());
-                                }),
+                              ButtonTitle: "Place order",
+                              OnTap: _openRazorpay,
+                            )
                           ],
                         ),
                       ),
@@ -258,3 +310,4 @@ class _AddPackageState extends State<AddPackage> {
     );
   }
 }
+//done
